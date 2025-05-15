@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="RBench-V: A Primary Assessment for Visual Reasoning Models with Multi-modal Outputs">
+  <meta name="keywords" content="Reasoning Benchmarks">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> RBench-V: A Primary Assessment for Visual Reasoning Models with Multi-modal Outputs </title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script> -->
+  <!-- <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+/Users/panlu/Library/Mobile Documents/com~apple~CloudDocs/ImageMath/visual-mathqa-server/data_final/images
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script> -->
+
+  <link rel="icon" href="./static/assets/examples/rbench_images/logo_v2.jpg">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/leaderboard.css">
+
+  <!-- <link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator_bulma.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script> -->
+  <script type="text/javascript" src="static/js/sort-table.js" defer></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/explorer-index.js"></script>
+  <script src="./static/js/question_card.js"></script>
+
+  <script src="./static/js/leaderboard_testmini.js"></script>
+  <script src="./data/results/output_folders.js" defer></script>
+  <script src="./data/results/model_scores.js" defer></script>
+
+  <script src="./visualizer/data/data_public.js" defer></script>
+</head>
+
+<body>
+
+  <!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            More Research
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://chameleon-llm.github.io/">
+              <b>Chameleon</b>
+              <p style="font-size:18px; display: inline; margin-left: 5px;">🔥</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav> -->
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="subtitle is-3 publication-subtitle">
+              <b>RBench-V: A Primary Assessment for Visual Reasoning Models with Multi-modal Outputs </b>             <br>
+            </h1>
+            <div class="content has-text-centered">
+              <img src="images/logo.png" alt="RBench-V Logo" width="10%" />
+            </div>
+            <!--<h1 class="subtitle is-3 publication-title is-bold">
+              <span class="R-Bench" style="vertical-align: middle"><strong style="color:#ff4800">ICML 2025
+                </strong></span>
+            </h1> -->
+              <b>
+                Meng-Hao Guo<sup>1</sup>, Xuanyu Chu<sup>1</sup>, Qianrui Yang<sup>1</sup>, Zhe-Han Mo<sup>1</sup>, Yiqing Shen<sup>1</sup>  
+                <br>
+                Pei-Lin Li<sup>1</sup>, Xinjie Lin<sup>1</sup>, Jinnian Zhang<sup>2</sup>, Xin-Sheng Chen<sup>1</sup>, Yi Zhang<sup>1</sup>
+                <br>
+                Kiyohiro Nakayama<sup>3</sup>, Zhengyang Geng<sup>4</sup>, Houwen Peng<sup>2</sup>, Han Hu<sup>2</sup>, Shi-Min Hu<sup>1</sup>
+                <!--Meng-Hao Guo<sup>1</sup>, Jiajun Xu<sup>1</sup>, Yi Zhang<sup>1</sup>, Jiaxi Song<sup>1</sup>, Haoyang Peng<sup>1</sup>, Yi-Xuan Deng<sup>1</sup>, Xinzhi Dong<sup>1</sup>, <br> 
+                Kiyohiro Nakayama <sup>3</sup>,  Zhengyang Geng <sup>4</sup>, Chen Wang<sup>5</sup>, Bolin Ni<sup>2</sup>, Guo-Wei Yang<sup>6</sup>, Yongming Rao<sup>2</sup>, Houwen Peng<sup>2</sup>, <br>
+                Han Hu<sup>2</sup>, Gordon Wetzstein<sup>3</sup>, Shi-Min Hu<sup>1</sup>   -->
+              </b>      
+              <br><br>
+                <sup>1</sup> Tsinghua University, <sup>2</sup> Tencent Hunyuan X, <sup>3</sup> Stanford University, <sup>4</sup> Carnegie Mellon University
+            <!-- <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="homepage"></a>author<sup style="color:#6fbf73;">1</sup>,</span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup style="color:#6fbf73;">1</sup>University,</span>
+            </div> -->
+
+
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href=""
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <!-- GitHub Link. -->
+                <!-- <span class="link-block">
+                  <a href="https://github.com/mathllm/MATH-V" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span> -->
+                <!-- Leaderboard Link. -->
+                <span class="link-block">
+                  <a href="https://evalmodels.github.io/rbench-v/#leaderboard"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <p style="font-size:18px">🏆</p>
+                    </span>
+                    <span>Leaderboard</span>
+                  </a>
+                </span>
+                <!-- Dataset Link. -->
+                <span class="link-block">
+                  <a href="https://huggingface.co/datasets/R-Bench/R-Bench-V"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <p style="font-size:18px">🤗</p>
+                      <!-- 🔗 -->
+                    </span>
+                    <span>Dataset</span>
+                  </a>
+                </span>
+                <!-- Visualization Link. -->
+                <!-- <span class="link-block">
+                  <a href="https://mathllm.github.io/mathvision/#visualization"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <p style="font-size:18px">🔮</p>
+                    </span>
+                    <span>Visualization</span>
+                  </a>
+                </span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <section class="section">
+    <div class="container" style="margin-top: -150px; margin-bottom: -100px;">
+      <div class="columns is-centered m-6">
+        <div class="column is-full has-text-centered content">
+          <div class="content has-text-centered">
+            <img src="images/teaser.png" alt="geometric reasoning" width="62%" />
+            <p> <b class="best-score-text">R denotes reasoning, and V denotes vision-indispensable.</b>
+              <br>
+              According to statistics on RBench-V, the benchmark spans 4 categories, which are <b>math</b>, <b>physics</b>, <b>counting</b> and <b>game</b>.
+              <br>
+              It features <b>803</b> questions centered on multi-modal outputs,
+              which requires image manipulation, 
+              such as generating novel images and constructing auxiliary lines to support reasoning process.
+             </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="margin-top: -100px; margin-bottom: -100px;">
+      <div class="columns is-centered m-6">
+        <div class="column is-full has-text-centered content">
+          <div class="content has-text-centered">
+            <img src="images/bench_compare.png" alt="benchmarks comparsion" width="90%" />
+            <p>
+              Comparison with different benchmarks such as MMLU, MMMU, etc. 
+              RBench-V assesses models' ability to generate multi-modal outputs during visual reasoning. 
+              <br>
+              Solving problems in RBench-V requires producing outputs beyond text, 
+              such as drawing geometric figures (top-right example) or tracing path through a maze (bottom-right example).
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container" style="margin-bottom: 2vh;">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Introduction</h2>
+          <div class="content has-text-justified">
+            <p>
+            The rapid advancement of native multi-modal models and omni-models, exemplified by GPT-4o, Gemini and o3 with their capability to process and generate content across modalities such as text and images, marks a significant milestone in the evolution of intelligence. 
+            Systematic evaluation of their multi-modal output capabilities in visual thinking process (a.k.a., multi-modal chain of thought, M-CoT) becomes critically important. 
+            However, existing benchmarks for evaluating multi-modal models primarily focus on assessing multi-modal inputs and text-only reasoning process while neglecting the importance of reasoning through multi-modal outputs. 
+            </p>
+            <p>
+            In this paper, we present a benchmark, dubbed as <b>RBench-V</b>, designed to assess models’ multi-modal reasoning. To conduct RBench-V, we carefully hand-pick 803 questions covering math, physics, counting and games. Unlike problems in previous benchmarks, which typically specify certain input modalities, RBench-V presents problems centered on <b>multi-modal outputs</b>, which requires <b>image manipulation</b>, such as generating novel images and constructing auxiliary lines to support reasoning process. 
+            </p>
+            <p>
+            We evaluate numerous open- and closed-source models on RBench-V, including o3, Gemini 2.5 pro, Qwen2.5-VL, etc. Even the best-performing model, o3, achieves only <b>25.8%</b> accuracy on RBench-V, far below the human score of <b>82.3%</b>, which shows current models struggle to leverage multi-modal reasoning.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="columns is-centered">
+        <div class="column is-full has-text-centered content">
+          <h2 class="title is-3" id="leaderboard">Leaderboard for Open- and Closed-Source Models</h2>
+          <div class="content">
+            <h3>Overview</h3>
+            <img src="images/compare_models.png" alt="compare_models" style="max-width: 65%;"/>
+            <!-- <p>🚨 To submit your results to the leaderboard, please send to <a href="guomenghao1997@gmail.com">this
+                email</a> with your result in <a href="static/assets/result.html" download="result.html">this
+                format</a>.</p> -->
+              
+            <h3>Leaderboard</h3>
+            <table class="js-sort-table" id="results">
+              <tr>
+                <!-- <td class="js-sort-number"><strong>#</strong></td> -->
+                <td class="js-sort-number"><strong>Model</strong></td>
+                <td class="js-sort-number"><strong>Source</strong></td>
+                <td class="js-sort-number"><strong><u>Overall</u></strong></td>
+                <td class="js-sort-number"><strong>w/o Math</strong></td>
+                <td class="js-sort-number"><strong>Math</strong></td>
+                <td class="js-sort-number"><strong>Physics</strong></td>
+                <td class="js-sort-number"><strong>Counting</strong></td>
+                <td class="js-sort-number"><strong>Game</strong></td>
+              </tr>
+              <tr>
+                <td><b class="best-score-text">Human Expert 👑</b></td>
+                <td> / </td>
+                <td><b class="best-score-text">82.3</b></td>
+                <td>81.7</td>
+                <td>84.7</td>
+                <td>69.4</td>
+                <td>81.0</td>
+                <td>89.1</td>
+              </tr>
+              <tr>
+                <td><b class="best-score-text">OpenAI o3 🥇</b></td>
+                <td><a href="https://platform.openai.com/docs/models/o3" class="ext-link" style="font-size: 16px;">Link</a>
+                </td>
+                <td><b class="best-score-text">25.8</b></td>
+                <td>19.5</td>
+                <td>48.3</td>
+                <td>20.4</td>
+                <td>22.1</td>
+                <td>17.1</td>
+              </tr>
+              <tr>
+                <td><b class="best-score-text">OpenAI o4-mini 🥈</b></td>
+                <td><a href="https://platform.openai.com/docs/models/o4-mini" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b class="best-score-text">20.9</b></td>
+                <td>14.6</td>
+                <td>43.2</td>
+                <td>12.7</td>
+                <td>17.4</td>
+                <td>13.8</td>
+              </tr>
+              <tr>
+                <td><b class="best-score-text">Gemini 2.5 pro-preview-0506 🥉</b></td>
+                <td><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/2-5-pro" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b class="best-score-text">20.2</b></td>
+                <td>13.9</td>
+                <td>42.6</td>
+                <td>9.6</td>
+                <td>19.0</td>
+                <td>12.7</td>
+              </tr>
+              <tr>
+                <td><b>Doubao-1.5-thinking-pro-m</b></td>
+                <td><a href="https://team.doubao.com/en/blog/%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E6%9C%80%E6%96%B0%E6%80%9D%E8%80%83%E6%A8%A1%E5%9E%8B-seed-thinking-v1-5%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82%E5%85%AC%E5%BC%80" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>17.1</b></td>
+                <td>11.0</td>
+                <td>38.6</td>
+                <td>13.4</td>
+                <td>9.7</td>
+                <td>10.5</td>
+              </tr>
+              <tr>
+                <td><b>OpenAI o1</b></td>
+                <td><a href="https://openai.com/o1/" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>16.2</b></td>
+                <td>11.0</td>
+                <td>34.7</td>
+                <td>5.7</td>
+                <td>12.3</td>
+                <td>13.1</td>
+              </tr>
+              <tr>
+                <td><b>Doubao-1.5-vision-pro</b></td>
+                <td><a href="https://team.doubao.com/en/" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>15.6</b></td>
+                <td>11.5</td>
+                <td>30.1</td>
+                <td>8.9</td>
+                <td>12.8</td>
+                <td>12.0</td>
+              </tr>
+              <tr>
+                <td><b>OpenAI GPT-4o-20250327</b></td>
+                <td><a href="https://platform.openai.com/docs/models/gpt-4o" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>14.1</b></td>
+                <td>11.2</td>
+                <td>24.4</td>
+                <td>3.2</td>
+                <td>13.3</td>
+                <td>14.2</td>
+              </tr>
+              <tr>
+                <td><b>OpenAI GPT-4.1</b></td>
+                <td><a href="https://platform.openai.com/docs/models/gpt-4.1" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>13.6</b></td>
+                <td>11.7</td>
+                <td>20.5</td>
+                <td>5.7</td>
+                <td>11.3</td>
+                <td>15.3</td>
+              </tr>
+              <tr>
+                <td><b>Step-R1-V-Mini</b></td>
+                <td><a href="https://www.aibase.com/tool/www.aibase.com/tool/36838" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>13.2</b></td>
+                <td>8.8</td>
+                <td>29.0</td>
+                <td>6.4</td>
+                <td>10.3</td>
+                <td>9.1</td>
+              </tr>
+              <tr>
+                <td><b>OpenAI GPT-4.5</b></td>
+                <td><a href="https://openai.com/index/introducing-gpt-4-5/" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>12.6</b></td>
+                <td>11.0</td>
+                <td>18.2</td>
+                <td>2.5</td>
+                <td>11.8</td>
+                <td>15.3</td>
+              </tr>
+              <tr>
+                <td><b>Claude-3.7-sonnet</b></td>
+                <td><a href="https://www.anthropic.com/claude/sonnet" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>11.5</b></td>
+                <td>9.1</td>
+                <td>19.9</td>
+                <td>3.8</td>
+                <td>8.7</td>
+                <td>12.4</td>
+              </tr>
+              <tr>
+                <td><b>QVQ-Max</b></td>
+                <td><a href="https://qwenlm.github.io/blog/qvq-max-preview/" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>11.0</b></td>
+                <td>8.1</td>
+                <td>21.0</td>
+                <td>5.7</td>
+                <td>6.2</td>
+                <td>10.9</td>
+              </tr>
+              <tr>
+                <td><b>Qwen2.5VL-72B</b></td>
+                <td><a href="https://huggingface.co/Qwen/Qwen2.5-VL-72B-Instruct" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>10.6</b></td>
+                <td>9.2</td>
+                <td>15.3</td>
+                <td>3.8</td>
+                <td>6.2</td>
+                <td>14.5</td>
+              </tr> 
+              <tr>
+                <td><b>InternVL-3-38B</b></td>
+                <td><a href="https://huggingface.co/OpenGVLab/InternVL3-38B" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>10.0</b></td>
+                <td>7.2</td>
+                <td>20.5</td>
+                <td>0.6</td>
+                <td>5.1</td>
+                <td>12.4</td>
+              </tr> 
+              <tr>
+                <td><b>Qwen2.5VL-32B</b></td>
+                <td><a href="https://huggingface.co/Qwen/Qwen2.5-VL-32B-Instruct" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>10.0</b></td>
+                <td>6.4</td>
+                <td>22.7</td>
+                <td>2.5</td>
+                <td>4.1</td>
+                <td>10.2</td>
+              </tr> 
+              <tr>
+                <td><b>MiniCPM-2.6-o</b></td>
+                <td><a href="https://github.com/OpenBMB/MiniCPM-o" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>9.7</b></td>
+                <td>7.5</td>
+                <td>17.6</td>
+                <td>1.3</td>
+                <td>3.6</td>
+                <td>13.8</td>
+              </tr> 
+              <tr>
+                <td><b>Llama4-Scout (109B MoE)</b></td>
+                <td><a href="https://ai.meta.com/blog/llama-4-multimodal-intelligence/" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>9.5</b></td>
+                <td>6.9</td>
+                <td>18.8</td>
+                <td>3.2</td>
+                <td>4.1</td>
+                <td>10.9</td>
+              </tr> 
+              <tr>
+                <td><b>MiniCPM-2.6-V</b></td>
+                <td><a href="https://huggingface.co/openbmb/MiniCPM-V-2_6" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>9.1</b></td>
+                <td>7.2</td>
+                <td>15.9</td>
+                <td>1.3</td>
+                <td>6.2</td>
+                <td>11.3</td>
+              </tr>
+              <tr>
+                <td><b>LLaVA-OneVision-72B</b></td>
+                <td><a href="https://huggingface.co/llava-hf/llava-onevision-qwen2-72b-ov-hf" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>9.0</b></td>
+                <td>8.9</td>
+                <td>9.1</td>
+                <td>4.5</td>
+                <td>4.6</td>
+                <td>14.5</td>
+              </tr>
+              <tr>
+                <td><b>DeepSeek-VL2</b></td>
+                <td><a href="https://github.com/deepseek-ai/DeepSeek-VL2" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>9.0</b></td>
+                <td>7.0</td>
+                <td>15.9</td>
+                <td>0.6</td>
+                <td>5.6</td>
+                <td>11.6</td>
+              </tr> 
+              <tr>
+                <td><b>LLaVA-OneVision-7B</b></td>
+                <td><a href="https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>8.5</b></td>
+                <td>6.8</td>
+                <td>14.2</td>
+                <td>2.5</td>
+                <td>4.6</td>
+                <td>10.9</td>
+              </tr> 
+              <tr>
+                <td><b>Qwen2.5VL-7B</b></td>
+                <td><a href="https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>8.3</b></td>
+                <td>7.0</td>
+                <td>13.1</td>
+                <td>2.5</td>
+                <td>3.6</td>
+                <td>12.0</td>
+              </tr> 
+              <tr>
+                <td><b>InternVL-3-8B</b></td>
+                <td><a href="https://huggingface.co/OpenGVLab/InternVL3-8B" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>8.2</b></td>
+                <td>6.0</td>
+                <td>15.9</td>
+                <td>1.9</td>
+                <td>5.6</td>
+                <td>8.7</td>
+              </tr> 
+              <tr>
+                <td><b>InternVL-3-14B</b></td>
+                <td><a href="https://huggingface.co/OpenGVLab/InternVL3-14B" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>8.0</b></td>
+                <td>7.0</td>
+                <td>11.4</td>
+                <td>1.3</td>
+                <td>5.1</td>
+                <td>11.6</td>
+              </tr> 
+              <tr>
+                <td><b>Qwen2.5-Omni-7B</b></td>
+                <td><a href="https://github.com/QwenLM/Qwen2.5-Omni" class="ext-link" style="font-size: 16px;">Link</a></td>
+                <td><b>7.7</b></td>
+                <td>4.5</td>
+                <td>11.4</td>
+                <td>1.9</td>
+                <td>2.1</td>
+                <td>7.7</td>
+              </tr>
+            </table>
+            <b>The values in the table represent the Top-1 accuracy, in % </b>
+            <br>
+            <br>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DATASET SECTION -->
+  <section class="hero is-light is-small">
+    <div class="hero-body has-text-centered">
+      <!-- <h1 class="title is-1 mathvision"><img src="static/images/mathvision.png" style="width:1.0em;vertical-align: middle" alt="Logo"/>mathvision Dataset</h1> -->
+      <h1 class="title is-1 R-Bench">
+        <span class="R-Bench" style="vertical-align: middle">RBench-V</span>
+      </h1>
+
+      <div id="container" style="height: 100%"></div>
+
+
+      <section class="Examples">
+        <div class="container">
+          <div class="columns is-centered has-text-centered">
+            <!-- <div class="column is-full-width has-text-centered"> -->
+            <div class="column is-four-fifths">
+              <h2 class="title is-3">Examples</h2>
+            </div>
+          </div>
+          <div class="columns is-centered">
+            <div class="column" style="margin-right: -6rem;">
+              <div class="content has-text-centered">
+                <img src="images/examples.png" alt="data-overview" style="max-width: 70%;" />
+                <p>
+                  <b class="best-score-text" style="font-size: 1.1rem;">Examples of o3's responses to math and game questions in RBench-V</b>:
+                  <br>
+                  <b>Left: </b> o3 solves a math question in RBench-V by converting a geometry problem into algebra using coordinates, 
+                  <br>
+                  unlike humans who use geometric reasoning.
+                  <br>
+                  <b>Right: </b> o3 fails a game question by not following instructions to draw required connections, as highlighted in blue.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </section>
+
+
+
+
+  <!-- <section class="section">
+    <div class="container">
+
+      <div class="columns is-centered m-6">
+        <div class="column is-full has-text-centered content">
+          <h2 class="title is-3">Some Images from 16 Subjects</h2>
+          <div id="results-carousel" class="carousel results-carousel">
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_algebra-1.png" alt="imgs_algebra" width="88%" />
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_analytic_geo-1.png" alt="imgs_analytic_geo" width="88%" />
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_arithmetic-1.png" alt="imgs_arithmetic" width="88%" />
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_comb_geo-1.png" alt="imgs_comb_geo" width="88%" />
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_comb-1.png" alt="imgs_comb" width="88%" />
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_counting-1.png" alt="imgs_counting" width="88%" />
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_desc_geo-1.png" alt="imgs_desc_geo" width="88%" />
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_graph-1.png" alt="imgs_graph" width="88%" />
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_logic-1.png" alt="imgs_logic" width="88%" />
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_angle-1.png" alt="imgs_angle" width="88%" />
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_area-1.png" alt="imgs_area" width="88%" />
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_length-1.png" alt="imgs_length" width="88%" />
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_solid_geo-1.png" alt="imgs_solid_geo" width="88%" />
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_stat-1.png" alt="imgs_stat" width="88%" />
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_topo-1.png" alt="imgs_topo" width="88%" />
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/assets/imgs_trans_geo-1.png" alt="imgs_trans_geo" width="88%" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </section> -->
+
+
+  <style>
+    /* 让 code 块更居中、美观 */
+    #BibTeX pre {
+      background-color: #f5f5f5;  /* Bulma 自带灰色变量 */
+      padding: 1.5rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: "Courier New", monospace;
+      font-size: 0.95rem;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+      white-space: pre-wrap;
+      word-break: break-word;
+      text-align: left;
+    }
+    
+    #BibTeX code {
+      color: #363636;  /* Bulma 默认正文色 */
+    }
+    </style>
+        
+
+  <!-- @PAN TODO: bibtex -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-3 has-text-centered">BibTeX</h2>
+      <pre>
+        <code>
+          @inproceedings{
+            guo2025rbench-v,
+            title={RBench-V: A Primary Assessment for Visual Reasoning Models 
+              with Multi-modal Outputs},
+            author={Meng-Hao Guo, Xuanyu Chu, Qianrui Yang, Zhe-Han Mo, Yiqing Shen, 
+              Pei-Lin Li, Xinjie Lin, Jinnian Zhang, Xin-Sheng Chen, Yi Zhang, Kiyohiro Nakayama, 
+              Zhengyang Geng, Houwen Peng, Han Hu, Shi-Min Hu},
+            year={2025},
+            eprint={},
+            archivePrefix={},
+            primaryClass={},
+            url={}, 
+          }
+        </code>
+      </pre>
+    </div>
+  </section>
+
+
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-3 has-text-centered">Acknowledgement</h2>
+      We would like to thank  <a href="https://mathllm.github.io/mathvision/">MathVision</a>, <a href="https://mathvista.github.io/">MathVista</a> for this website, which is
+      adapted from <a href="https://nerfies.github.io/">Nerfies</a>, licensed under a
+      <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+        Commons Attribution-ShareAlike 4.0 International License</a>.
+    </div>
+  </section>
+
+
+
+
+</body>
+
+</html>
