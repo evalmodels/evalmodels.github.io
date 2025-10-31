@@ -281,7 +281,29 @@
                 <td>89.1</td>
               </tr>
               <tr>
-                <td><b class="best-score-text">OpenAI o3 🥇</b></td>
+                <td><b class="best-score-text">DreamPRM-1.5 (GPT-5-mini)<sup>*</sup> 🥇</b></td>
+                <td><a href="https://github.com/coder-qicao/DreamPRM-1.5" class="ext-link" style="font-size: 16px;">Link</a>
+                </td>
+                <td><b class="best-score-text">31.3</b></td>
+                <td>26.0</td>
+                <td>50.0</td>
+                <td>38.9</td>
+                <td>24.6</td>
+                <td>19.6</td>
+              </tr>
+              <tr>
+                <td><b class="best-score-text">GPT-5-mini 🥈</b></td>
+                <td><a href="https://platform.openai.com/docs/models/gpt-5-mini" class="ext-link" style="font-size: 16px;">Link</a>
+                </td>
+                <td><b class="best-score-text">27.9</b></td>
+                <td>22.2</td>
+                <td>48.3</td>
+                <td>31.8</td>
+                <td>22.6</td>
+                <td>16.4</td>
+              </tr>
+              <tr>
+                <td><b class="best-score-text">OpenAI o3 🥉</b></td>
                 <td><a href="https://platform.openai.com/docs/models/o3" class="ext-link" style="font-size: 16px;">Link</a>
                 </td>
                 <td><b class="best-score-text">25.8</b></td>
@@ -292,7 +314,7 @@
                 <td>17.1</td>
               </tr>
               <tr>
-                <td><b class="best-score-text">OpenAI o4-mini 🥈</b></td>
+                <td><b>OpenAI o4-mini</b></td>
                 <td><a href="https://platform.openai.com/docs/models/o4-mini" class="ext-link" style="font-size: 16px;">Link</a></td>
                 <td><b class="best-score-text">20.9</b></td>
                 <td>14.6</td>
@@ -302,7 +324,7 @@
                 <td>13.8</td>
               </tr>
               <tr>
-                <td><b class="best-score-text">Gemini 2.5 pro-preview-0506 🥉</b></td>
+                <td><b>Gemini 2.5 pro-preview-0506 </b></td>
                 <td><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/2-5-pro" class="ext-link" style="font-size: 16px;">Link</a></td>
                 <td><b class="best-score-text">20.2</b></td>
                 <td>13.9</td>
@@ -533,6 +555,7 @@
               </tr>
             </table>
             <b>The values in the table represent the Top-1 accuracy, in % </b>
+            <p><sup>*</sup> Results obtained under "Best-of-4 + PRM selection": for each test instance, four reasoning trajectories are generated, and the Process Reward Model (PRM) selects the most coherent one.</p>
             <br>
             <br>
         </div>
